@@ -1,4 +1,4 @@
-import UserRepository from "../../database/repositories/user.repositories.js";
+import UserRepository from "../../database/repositories/vendor.repositories.js";
 import AppError from "../../utils/appError.js";
 import { USER_ALREADY_EXISTS, USER_NOT_FOUND } from "../constants/errorCodes.js";
 
