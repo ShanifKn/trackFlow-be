@@ -1,13 +1,36 @@
 import { Users } from "../models/user.model.js";
+import { Vendors } from "../models/vendor.model.js";
 
-class UserRepository {
+class VendorRepository {
   constructor() { }
 
   // Method to save a new user
-  async saveUser({ firstName, lastName, email, password, bio, branch, role }) {
+  async saveVendor({ name,
+    contact_name,
+    email,
+    phone,
+    license_no,
+    authority,
+    business_type,
+    vat_no,
+    category,
+    service_type,
+    address, }) {
     try {
 
-      const user = await Users.create({ firstName, lastName, email, password, bio, branch, role });
+      const user = await Vendors.create({
+        name,
+        contact_name,
+        email,
+        phone,
+        license_no,
+        authority,
+        business_type,
+        vat_no,
+        category,
+        service_type,
+        address,
+      });
       return user;
     } catch (error) {
       console.log(error)
@@ -16,9 +39,9 @@ class UserRepository {
   }
 
   // Method to get a user by ID
-  async getUserById({ userId }) {
+  async getvendorById({ userId }) {
     try {
-      const user = await Users.findById(userId);
+      const user = await Vendors.findById(userId);
       if (!user) {
         throw new Error("User not found");
       }
@@ -29,9 +52,9 @@ class UserRepository {
   }
 
   // Method to get a user by ID
-  async getAllUsers() {
+  async getAllVendors() {
     try {
-      const user = await Users.find();
+      const user = await Vendors.find();
       if (!user) {
         throw new Error("User not found");
       }
@@ -54,11 +77,34 @@ class UserRepository {
   }
 
   // Method to update user details
-  async updateUser({ userId, firstName, lastName, email, bio, branch, role }) {
+  async updateVendor({ vendorId,
+    name,
+    contact_name,
+    email,
+    phone,
+    license_no,
+    authority,
+    business_type,
+    vat_no,
+    category,
+    service_type,
+    address, }) {
     try {
-      const updatedUser = await Users.findByIdAndUpdate(
-        userId,
-        { firstName, lastName, email, bio, branch, role },
+      const updatedUser = await Vendors.findByIdAndUpdate(
+        vendorId,
+        {
+          name,
+          contact_name,
+          email,
+          phone,
+          license_no,
+          authority,
+          business_type,
+          vat_no,
+          category,
+          service_type,
+          address,
+        },
         {
           new: true, // Return the updated document
           runValidators: true, // Validate the updated data against schema
@@ -84,4 +130,4 @@ class UserRepository {
   }
 }
 
-export default UserRepository;
+export default VendorRepository;
