@@ -2,7 +2,7 @@ import UserService from "../../services/user.service.js";
 import { tryCatch } from "../../utils/index.js";
 import { LoginRateLimiter } from "../middlewares/apiLimiter.js";
 import ExistCheck from "../validations/existCheck.js";
-import { SchemaValidationForLogin } from "../validations/schema.validation.js";
+import { SchemaValidationForLogin, SchemaValidationForUser } from "../validations/schema.validation.js";
 import Validate from "../validations/validator.js";
 
 const UserRouter = (app) => {
@@ -37,6 +37,60 @@ const UserRouter = (app) => {
       return res.status(200).json({ message });
     })
   );
+
+  // POST route to add a new user
+  app.post('/add-user', SchemaValidationForUser, Validate, async (req, res) => {
+    try {
+      const { firstName, lastName, email, password, bio, branch, role } = req.body;
+      console.log(firstName, lastName, email, password, bio, branch, role)
+      const user = await service.saveUser({ firstName, lastName, email, password, bio, branch, role })
+      res.status(201).json({ message: 'User added successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Error adding user' });
+    }
+  });
+
+  // GET route to fetch a user by ID
+  app.get("/user/:id", async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const user = await service.getUserById({ userId });
+      res.status(200).json({ message: "User fetched successfully", data: user });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  });
+
+  // GET route to fetch a user by ID
+  app.get("/list", async (req, res) => {
+    try {
+      const user = await service.getAllUsers();
+      res.status(200).json({ message: "User fetched successfully", data: user });
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  });
+
+  // PUT route to update user details
+  app.patch("/user/update", SchemaValidationForUser, Validate, async (req, res) => {
+    try {
+
+      const { userId, firstName, lastName, email, bio, branch, role } = req.body;
+      const updatedUser = await service.updateUser({
+        userId,
+        firstName,
+        lastName,
+        email,
+        bio,
+        branch,
+        role,
+      });
+      res.status(200).json({ message: "User updated successfully", data: updatedUser });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 };
 
 export default UserRouter;
