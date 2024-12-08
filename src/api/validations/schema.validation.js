@@ -220,3 +220,59 @@ export const SchemaValidationForVendor = [
     .isString()
     .withMessage("Address must be a string"),
 ];
+
+export const SchemaValidationForProduct = [
+  // Product Name validation
+  body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Product name is mandatory")
+    .isString()
+    .withMessage("Product name must be a string")
+    .isLength({ min: 3 })
+    .withMessage("Product name must be at least 3 characters long"),
+
+  // Category validation
+  body("category")
+    .trim()
+    .notEmpty()
+    .withMessage("Product category is mandatory")
+    .isString()
+    .withMessage("Category must be a string"),
+
+  // Brand validation
+  body("brand")
+    .trim()
+    .notEmpty()
+    .withMessage("Brand name is mandatory")
+    .isString()
+    .withMessage("Brand name must be a string")
+    .isLength({ min: 2 })
+    .withMessage("Brand name must be at least 2 characters long"),
+
+  // Description validation
+  body("description")
+    .trim()
+    .notEmpty()
+    .withMessage("Product description is mandatory")
+    .isString()
+    .withMessage("Description must be a string")
+    .isLength({ min: 5 })
+    .withMessage("Description must be at least 10 characters long"),
+
+  // Specifications validation
+  body("specification")
+    .trim()
+    .notEmpty()
+    .withMessage("Product specifications are mandatory")
+    .isString()
+    .withMessage("Specifications must be a string")
+    .isLength({ min: 3 })
+    .withMessage("Specifications must be at least 3 characters long"),
+
+  // Image URLs validation
+  body("imageUrls")
+    .isArray()
+    .withMessage("Image URLs must be an array"),
+
+];

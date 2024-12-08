@@ -1,10 +1,9 @@
-import { Users } from "../models/user.model.js";
 import { Vendors } from "../models/vendor.model.js";
 
 class VendorRepository {
   constructor() { }
 
-  // Method to save a new user
+  // Method to save a new vendor
   async saveVendor({ name,
     contact_name,
     email,
@@ -16,67 +15,50 @@ class VendorRepository {
     category,
     service_type,
     address, }) {
-    try {
-
-      const user = await Vendors.create({
-        name,
-        contact_name,
-        email,
-        phone,
-        license_no,
-        authority,
-        business_type,
-        vat_no,
-        category,
-        service_type,
-        address,
-      });
-      return user;
-    } catch (error) {
-      console.log(error)
-      throw new Error(`Error saving user: ${error.message}`);
-    }
+    const vendor = await Vendors.create({
+      name,
+      contact_name,
+      email,
+      phone,
+      license_no,
+      authority,
+      business_type,
+      vat_no,
+      category,
+      service_type,
+      address,
+    });
+    return vendor;
   }
 
-  // Method to get a user by ID
-  async getvendorById({ userId }) {
-    try {
-      const user = await Vendors.findById(userId);
-      if (!user) {
-        throw new Error("User not found");
-      }
-      return user;
-    } catch (error) {
-      throw new Error(`Error retrieving user: ${error.message}`);
+  // Method to get a vendor by ID
+  async getvendorById({ vendorId }) {
+    const vendor = await Vendors.findById(vendorId);
+    if (!vendor) {
+      throw new Error("vendor not found");
     }
+    return vendor;
   }
 
-  // Method to get a user by ID
+  // Method to get a vendor by ID
   async getAllVendors() {
-    try {
-      const user = await Vendors.find();
-      if (!user) {
-        throw new Error("User not found");
-      }
-      return user;
-    } catch (error) {
-      throw new Error(`Error retrieving user: ${error.message}`);
+    const vendor = await Vendors.find();
+    if (!vendor) {
+      throw new Error("vendor not found");
     }
+    return vendor;
+
   }
-  // Method to get a user by ID
-  async CountUserByEmail({ email }) {
-    try {
-      const user = await Users.findOne({ email });
-      if (!user) {
-        throw new Error("User not found");
-      }
-      return user;
-    } catch (error) {
-      throw new Error(`Error retrieving user: ${error.message}`);
+  // Method to get a vendor by ID
+  async CountvendorByEmail({ email }) {
+    const vendor = await Vendors.findOne({ email });
+    if (!vendor) {
+      throw new Error("vendor not found");
     }
+    return vendor;
   }
 
-  // Method to update user details
+  // Method to update vendor details
   async updateVendor({ vendorId,
     name,
     contact_name,
@@ -89,44 +71,36 @@ class VendorRepository {
     category,
     service_type,
     address, }) {
-    try {
-      const updatedUser = await Vendors.findByIdAndUpdate(
-        vendorId,
-        {
-          name,
-          contact_name,
-          email,
-          phone,
-          license_no,
-          authority,
-          business_type,
-          vat_no,
-          category,
-          service_type,
-          address,
-        },
-        {
-          new: true, // Return the updated document
-          runValidators: true, // Validate the updated data against schema
-        }
-      );
-      if (!updatedUser) {
-        throw new Error("User not found");
+    const updatedvendor = await Vendors.findByIdAndUpdate(
+      vendorId,
+      {
+        name,
+        contact_name,
+        email,
+        phone,
+        license_no,
+        authority,
+        business_type,
+        vat_no,
+        category,
+        service_type,
+        address,
+      },
+      {
+        new: true, // Return the updated document
+        runValidators: true, // Validate the updated data against schema
       }
-      return updatedUser;
-    } catch (error) {
-      throw new Error(`Error updating user: ${error.message}`);
+    );
+    if (!updatedvendor) {
+      throw new Error("vendor not found");
     }
+    return updatedvendor;
   }
 
-  // Method to delete a user
-  async deleteUser(userId) {
-    try {
-      const deletedUser = await Users.findByIdAndDelete(userId);
-      return deletedUser;
-    } catch (error) {
-      throw new Error(`Error deleting user: ${error.message}`);
-    }
+  // Method to delete a vendor
+  async deletevendor(vendorId) {
+    const deletedvendor = await vendors.findByIdAndDelete(vendorId);
+    return deletedvendor;
   }
 }
 
