@@ -18,6 +18,25 @@ const UserRouter = (app) => {
       return res.status(200).json("Running");
     })
   );
+
+  //@route create user/
+  //@des  Create new user
+  //@access public
+  app.post(
+    "/signup",
+    LoginRateLimiter,
+    Validate,
+    tryCatch(async (req, res) => {
+      const { email, password } = req.body;
+
+      //Check if user already exists with given email and role
+      await userExists.ForSignup({ email });
+
+      const { message } = await service.CreateUser({ email, password });
+
+      return res.status(200).json({ message });
+    })
+  );
 };
 
 export default UserRouter;
