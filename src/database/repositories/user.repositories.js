@@ -1,18 +1,11 @@
 import { Users } from "../models/user.model.js";
 
 class UserRepository {
-  constructor() { }
+  constructor() {}
 
   // Method to save a new user
   async saveUser({ firstName, lastName, email, password, bio, branch, role }) {
-    try {
-
-      const user = await Users.create({ firstName, lastName, email, password, bio, branch, role });
-      return user;
-    } catch (error) {
-      console.log(error)
-      throw new Error(`Error saving user: ${error.message}`);
-    }
+    return await Users.create({ firstName, lastName, email, password, bio, branch, role });
   }
 
   // Method to get a user by ID

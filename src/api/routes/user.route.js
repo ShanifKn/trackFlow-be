@@ -39,17 +39,21 @@ const UserRouter = (app) => {
   );
 
   // POST route to add a new user
-  app.post('/add-user', SchemaValidationForUser, Validate, async (req, res) => {
-    try {
+
+  app.post(
+    "/add-user",
+    SchemaValidationForUser,
+    Validate,
+    tryCatch(async (req, res) => {
       const { firstName, lastName, email, password, bio, branch, role } = req.body;
-      console.log(firstName, lastName, email, password, bio, branch, role)
-      const user = await service.saveUser({ firstName, lastName, email, password, bio, branch, role })
-      res.status(201).json({ message: 'User added successfully' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Error adding user' });
-    }
-  });
+
+      console.log(firstName, lastName, email, password, bio, branch, role);
+
+      const user = await service.saveUser({ firstName, lastName, email, password, bio, branch, role });
+
+      res.status(201).json({ message: "User added successfully" });
+    })
+  );
 
   // GET route to fetch a user by ID
   app.get("/user/:id", async (req, res) => {
@@ -75,7 +79,6 @@ const UserRouter = (app) => {
   // PUT route to update user details
   app.patch("/user/update", SchemaValidationForUser, Validate, async (req, res) => {
     try {
-
       const { userId, firstName, lastName, email, bio, branch, role } = req.body;
       const updatedUser = await service.updateUser({
         userId,

@@ -1,4 +1,4 @@
-import AssetRepository from "../../database/repositories/asset.repositories";
+import AssetRepository from "../../database/repositories/asset.repositories.js";
 
 class AssetHelper {
   constructor() {

@@ -11,21 +11,16 @@ class UserService {
 
   // Method to save a new user
   async saveUser({ firstName, lastName, email, password, bio, branch, role }) {
-    try {
-      // Hash the password before saving
-      const hashedPassword = await hashPassword(password)
-      return await this.userRepository.saveUser({ firstName, lastName, email, password: hashedPassword, bio, branch, role });
-
-    } catch (error) {
-      throw new Error(`Error saving user: ${error.message}`);
-    }
+    // Hash the password before saving
+    const hashedPassword = await hashPassword(password);
+    
+    return await this.userRepository.saveUser({ firstName, lastName, email, password: hashedPassword, bio, branch, role });
   }
 
   // Method to get a user by ID
   async getUserById({ userId }) {
     try {
-      return await this.userRepository.getUserById({ userId })
-
+      return await this.userRepository.getUserById({ userId });
     } catch (error) {
       throw new Error(`Error saving user: ${error.message}`);
     }
@@ -34,8 +29,7 @@ class UserService {
   // Method to get a user by ID
   async getAllUsers() {
     try {
-      return await this.userRepository.getAllUsers()
-
+      return await this.userRepository.getAllUsers();
     } catch (error) {
       throw new Error(`Error saving user: ${error.message}`);
     }
@@ -44,13 +38,11 @@ class UserService {
   // Method to update user details
   async updateUser({ userId, firstName, lastName, email, bio, branch, role }) {
     try {
-      return await this.userRepository.updateUser({ userId, firstName, lastName, email, bio, branch, role })
-
+      return await this.userRepository.updateUser({ userId, firstName, lastName, email, bio, branch, role });
     } catch (error) {
       throw new Error(`Error saving user: ${error.message}`);
     }
   }
-
 }
 
 export default UserService;

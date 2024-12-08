@@ -1,4 +1,4 @@
-import { Assets } from "../models/asset.model";
+import { Assets } from "../models/asset.model.js";
 
 class AssetRepository {
   constructor() {}
