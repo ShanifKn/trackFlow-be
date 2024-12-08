@@ -22,45 +22,30 @@ class VendorService {
     category,
     service_type,
     address, }) {
-    try {
 
-      return await this.userRepository.saveVendor({
-        name,
-        contact_name,
-        email,
-        phone,
-        license_no,
-        authority,
-        business_type,
-        vat_no,
-        category,
-        service_type,
-        address,
-      });
-
-    } catch (error) {
-      throw new Error(`Error saving user: ${error.message}`);
-    }
+    return await this.userRepository.saveVendor({
+      name,
+      contact_name,
+      email,
+      phone,
+      license_no,
+      authority,
+      business_type,
+      vat_no,
+      category,
+      service_type,
+      address,
+    });
   }
 
   // Method to get a user by ID
   async getvendorById({ userId }) {
-    try {
-      return await this.userRepository.getvendorById({ userId })
-
-    } catch (error) {
-      throw new Error(`Error saving user: ${error.message}`);
-    }
+    return await this.userRepository.getvendorById({ userId })
   }
 
   // Method to get a user by ID
   async getAllVendors() {
-    try {
-      return await this.userRepository.getAllVendors()
-
-    } catch (error) {
-      throw new Error(`Error saving user: ${error.message}`);
-    }
+    return await this.userRepository.getAllVendors()
   }
 
   // Method to update user details
@@ -76,25 +61,20 @@ class VendorService {
     category,
     service_type,
     address, }) {
-    try {
-      return await this.userRepository.updateVendor({
-        vendorId,
-        name,
-        contact_name,
-        email,
-        phone,
-        license_no,
-        authority,
-        business_type,
-        vat_no,
-        category,
-        service_type,
-        address,
-      })
-
-    } catch (error) {
-      throw new Error(`Error saving user: ${error.message}`);
-    }
+    return await this.userRepository.updateVendor({
+      vendorId,
+      name,
+      contact_name,
+      email,
+      phone,
+      license_no,
+      authority,
+      business_type,
+      vat_no,
+      category,
+      service_type,
+      address,
+    })
   }
 
   async checkLicenseNoExists(license_no) {

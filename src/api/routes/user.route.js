@@ -39,42 +39,40 @@ const UserRouter = (app) => {
   );
 
   // POST route to add a new user
-  app.post('/add-user', SchemaValidationForUser, Validate, async (req, res) => {
-    try {
-      const { firstName, lastName, email, password, bio, branch, role } = req.body;
-      console.log(firstName, lastName, email, password, bio, branch, role)
-      const user = await service.saveUser({ firstName, lastName, email, password, bio, branch, role })
-      res.status(201).json({ message: 'User added successfully' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Error adding user' });
-    }
-  });
+  app.post('/add-user', SchemaValidationForUser, Validate, tryCatch(async (req, res) => {
+    const { firstName, lastName, email, password, bio, branch, role } = req.body;
+    console.log(firstName, lastName, email, password, bio, branch, role)
+    const user = await service.saveUser({ firstName, lastName, email, password, bio, branch, role })
+    res.status(201).json({ message: 'User added successfully' });
+
+  }));
 
   // GET route to fetch a user by ID
-  app.get("/user/:id", async (req, res) => {
-    try {
+  app.get("/user/:id", tryCatch(
+    async (req, res) => {
+
       const userId = req.params.id;
       const user = await service.getUserById({ userId });
       res.status(200).json({ message: "User fetched successfully", data: user });
-    } catch (error) {
-      res.status(404).json({ error: error.message });
+
     }
-  });
+  ));
 
   // GET route to fetch a user by ID
-  app.get("/list", async (req, res) => {
-    try {
-      const user = await service.getAllUsers();
-      res.status(200).json({ message: "User fetched successfully", data: user });
-    } catch (error) {
-      res.status(404).json({ error: error.message });
+  app.get("/list", tryCatch(
+    async (req, res) => {
+      try {
+        const user = await service.getAllUsers();
+        res.status(200).json({ message: "User fetched successfully", data: user });
+      } catch (error) {
+        res.status(404).json({ error: error.message });
+      }
     }
-  });
+  ));
 
   // PUT route to update user details
-  app.patch("/user/update", SchemaValidationForUser, Validate, async (req, res) => {
-    try {
+  app.patch("/user/update", SchemaValidationForUser, Validate, tryCatch(
+    async (req, res) => {
 
       const { userId, firstName, lastName, email, bio, branch, role } = req.body;
       const updatedUser = await service.updateUser({
@@ -87,10 +85,8 @@ const UserRouter = (app) => {
         role,
       });
       res.status(200).json({ message: "User updated successfully", data: updatedUser });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
     }
-  });
+  ));
 };
 
 export default UserRouter;
